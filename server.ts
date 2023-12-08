@@ -21,7 +21,7 @@ const resolvers = {
     movie: () => ({ title: "hello", year: 2021 }),
   },
   Mutation: {
-    createMovie: (_, args) => {
+    createMovie: (_: any, args: any) => {
       console.log(args);
       return true;
     },
