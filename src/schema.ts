@@ -1,11 +1,13 @@
-import { gql } from "apollo-server";
-import client from "./client";
+import { loadFilesSync } from "@graphql-tools/load-files";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { mergeResolvers, mergeTypeDefs } from "@graphql-tools/merge";
 
-export const resolvers = {
-  Mutation: {
-    createMovie: (_: any, { title, year, genre }: { title: string; year: number; genre: string }) =>
-      client.movie.create({ data: { title, year, genre } }),
-    deleteMovie: (_: any, { id }) => client.movie.delete({ where: { id } }),
-    updateMovie: (_: any, { id, year }) => client.movie.update({ where: { id }, data: { year } }),
-  },
-};
+const loadedTypes = loadFilesSync(`${__dirname}/**/*.typeDefs.js`);
+const loadedResolvers = loadFilesSync(`${__dirname}/**/*.{queries,mutations}.js`);
+
+const typeDefs = mergeTypeDefs(loadedTypes);
+const resolvers = mergeResolvers(loadedResolvers);
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+export default schema;
