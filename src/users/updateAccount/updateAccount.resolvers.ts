@@ -1,5 +1,5 @@
 export default {
   Mutation: {
-    updateAccount: () => console.log("jo"),
+    updateAccount: (_, { firstName, lastName, username, email, password }) => console.log("jo"),
   },
 };
