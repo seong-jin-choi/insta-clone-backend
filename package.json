@@ -20,15 +20,17 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "graphql": "^15.4.0",
-    "graphql-tools": "^9.0.0"
+    "graphql-tools": "^9.0.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
     "@babel/node": "^7.22.19",
     "@babel/preset-env": "^7.23.5",
     "@types/bcrypt": "^5.0.2",
-    "@types/node": "^20.10.4",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/dotenv": "^8.2.0",
+    "@types/node": "^20.10.4",
     "nodemon": "^3.0.2",
     "prisma": "^5.7.0",
     "ts-node": "^10.9.2",
