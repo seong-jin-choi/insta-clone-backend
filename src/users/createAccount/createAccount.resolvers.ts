@@ -10,10 +10,15 @@ export default {
           throw new Error("This username/password is already taken.");
         }
         const HashedPassword = await bcrypt.hash(password, 10);
-
-        return client.user.create({ data: { firstName, lastName, username, email, password: HashedPassword } });
+        await client.user.create({ data: { firstName, lastName, username, email, password: HashedPassword } });
+        return {
+          ok: true,
+        };
       } catch (error) {
-        return error;
+        return {
+          ok: false,
+          error,
+        };
       }
     },
   },
