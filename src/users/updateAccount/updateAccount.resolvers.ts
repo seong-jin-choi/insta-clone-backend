@@ -1,12 +1,11 @@
 import client from "../../client";
 import bcrypt from "bcrypt";
 import Jwt, { JwtPayload } from "jsonwebtoken";
+import { protectedResolver } from "../users.utils";
 
 export default {
   Mutation: {
-    updateAccount: async (_, { firstName, lastName, username, email, password }, { loggedInUser }) => {
-      console.log(loggedInUser);
-
+    updateAccount: protectedResolver(async (_, { firstName, lastName, username, email, password, bio }, { loggedInUser }) => {
       let uglyPassword = null;
       if (password) {
         uglyPassword = await bcrypt.hash(password, 10);
@@ -20,6 +19,7 @@ export default {
           lastName,
           username,
           email,
+          bio,
           ...(uglyPassword && { password: uglyPassword }),
         },
       });
@@ -34,6 +34,6 @@ export default {
           error: "error",
         };
       }
-    },
+    }),
   },
 };
