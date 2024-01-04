@@ -1,6 +1,6 @@
-import client from "../../client";
 import bcrypt from "bcrypt";
-import Jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import client from "../../client";
 
 export default {
   Mutation: {
@@ -12,14 +12,14 @@ export default {
           error: "User not found.",
         };
       }
-      const isValidPassword = await bcrypt.compare(password, user.password);
-      if (!isValidPassword) {
+      const passwordOk = await bcrypt.compare(password, user.password);
+      if (!passwordOk) {
         return {
           ok: false,
-          error: "Invalid Password",
+          error: "Incorrect password.",
         };
       }
-      const token = Jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+      const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
       return {
         ok: true,
         token,
